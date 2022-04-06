@@ -16,10 +16,18 @@ typedef struct shell_data_s
 	char **envp;
 } shell_data_t;
 
-int prompt(void);
-void simple_shell(shell_data_t *data);
+int read_prompt(void);
+int simple_shell(shell_data_t *data);
+
+char *_strtok(char *str, const char *delim);
+char **_strsplit(char *str, const char *delim);
+void free_tab(char ***tab);
+
+int read_prompt(void);
 
 size_t _strlen(char *str);
 void _putstr(char *str);
+char *_strpbrk(char *s, const char *accept);
+char *_strndup(char *str, size_t n);
 
 #endif

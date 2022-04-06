@@ -1,13 +1,33 @@
 #include "main.h"
 /**
- * prompt - display a prompt
+ * read_prompt -  read_prompt
  * Return:
  */
-int prompt(void)
+int read_prompt(void)
 {
-	while (1)
+	char *buf = NULL;
+	size_t i, n = 0, id = 0;
+	char **tabtokens;
+
+	if (getline(&buf, &n, stdin) == -1)
+		return (-1);
+	if (buf)
 	{
-		_putstr("$ ");
+		if (_strlen(buf) > 1)
+		{
+			tabtokens = _strsplit(buf, " \n");
+			if (!tabtokens)
+				return (-1);
+			id = fork();
+			if (!id)
+			{
+				if (execve(tabtokens[0], tabtokens, NULL) == -1)
+					perror("ERROR:");
+			}
+			wait(NULL);
+			free_tab(&tabtokens);
+		}
+		free(buf);
+		buf = NULL;
 	}
-	return (0);
 }
