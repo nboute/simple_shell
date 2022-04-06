@@ -9,12 +9,14 @@ int _strchrlen(char *str, char c)
 {
 	int len;
 
+	if (str == NULL)
+		return (-1);
+
 	for (len = 0; str[len] && c; len++)
 	{
 		if (str[len] == c)
 			return (len);
 	}
-	return (-1);
 }
 /**
  * read_line - read the file and copy a string into a buffer
@@ -33,7 +35,7 @@ char *read_line(char **line, size_t *n, FILE *stream)
 	len = _strchrlen(buffer, '\n');
 	if (len == -1)
 	{
-		// Ajouter buffer a la ligne et continuer a lire
+		//  Ajouter buffer a la ligne et continuer a lire
 	}
 	else
 	{
@@ -44,6 +46,7 @@ char *read_line(char **line, size_t *n, FILE *stream)
 		else
 		{
 			// vider line
+			// free(line);
 			// *line = NULL;
 			*n = len;
 			return (buffer);

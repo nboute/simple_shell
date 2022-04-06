@@ -67,3 +67,20 @@ char *_strndup(char *str, size_t n)
 	dup[i] = '\0';
 	return (dup);
 }
+
+/**
+ * _strncmp - compares first n characters between two strings
+ * @s1: First string to compare
+ * @s2: Second string to compare
+ * @n: Number of characters to compare
+ * Return: Difference between last two different characters
+ */
+int _strncmp(char *s1, char *s2, size_t n)
+{
+	while (*s1 && *s2 && *s1 == *s2 && n--)
+	{
+		s1++;
+		s2++;
+	}
+	return (*s1 - *s2);
+}
