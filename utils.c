@@ -4,7 +4,7 @@
  * str: the string
  * Return: the lenght of the string
  */
-size_t _strlen(char *str)
+size_t _strlen(const char *str)
 {
 	size_t len;
 
@@ -21,7 +21,16 @@ void _putstr(char *str)
 {
 	write(STDOUT_FILENO, str, _strlen(str));
 }
-
+/**
+ * _putstr_fd - print a string on given file descriptor
+ * @str: the string
+ * @fd: fd to print string to
+ * Return: None
+ */
+void _putstr_fd(char *str, int fd)
+{
+	write(fd, str, _strlen(str));
+}
 /**
  * _strpbrk - Searches for any of the bytes of a substring in another string
  * @s: String to search into

@@ -10,6 +10,7 @@ int read_prompt(shell_data_t *data)
 	int ret = 0;
 	char **tabtokens;
 
+	data->nbcommands++;
 	ret = getline(&buf, &n, stdin);
 	if (ret == -1)
 	{
@@ -24,18 +25,22 @@ int read_prompt(shell_data_t *data)
 			tabtokens = _strsplit(buf, " \n");
 			if (!tabtokens)
 				return (-1);
-			command = find_command(data, tabtokens[0]);
-			if (command)
+			ret = find_builtin(data, tabtokens);
+			if (data->exit == -1 && !ret)
 			{
-				id = fork();
-				if (!id)
+				command = find_command(data, tabtokens[0]);
+				if (command)
 				{
-					if (execve(command, tabtokens, data->envp) == -1)
+					id = fork();
+					if (!id)
 					{
-						perror("ERROR:");
+						if (execve(command, tabtokens, data->envp) == -1)
+						{
+							perror("ERROR:");
+						}
 					}
+					wait(NULL);
 				}
-				wait(NULL);
 			}
 			free_tab(&tabtokens);
 		}

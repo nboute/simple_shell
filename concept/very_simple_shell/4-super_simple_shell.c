@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <string.h>
+#include <sys/wait.h>
 /**
  * _strpbrk - Searches for any of the bytes of a substring in another string
  * @s: String to search into
@@ -157,14 +158,14 @@ int	cycle_prompt(void)
 			if (execve(tabtokens[0], tabtokens, NULL) == -1)
 				perror("ERROR:");
 		}
-		wait();
+		wait(NULL);
 		free_tab(&tabtokens);
 	}
 }
 
 int	main(void)
 {
-	if (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO))
+	if (!isatty(STDIN_FILENO))
 		cycle_prompt();
 	else
 	{
