@@ -1,0 +1,24 @@
+#include "main.h"
+
+char	*_strjoin(char *s1, char *s2)
+{
+	char	*join;
+	size_t	len1, len2;
+
+	if (!s1 && !s2)
+		return (NULL);
+	if (!s1)
+		return (_strdup(s1));
+	if (!s2)
+		return (_strdup(s2));
+	len1 = _strlen(s1);
+	len2 = _strlen(s2);
+	join = malloc(len1 + len2 + 1);
+	if (!join)
+		return (NULL);
+	_strcpy(join, s1);
+
+	_strcpy(join + len1, s2);
+
+	return (join);
+}

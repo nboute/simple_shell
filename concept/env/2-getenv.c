@@ -9,7 +9,7 @@
  */
 int	_strncmp(char *s1, char *s2, size_t n)
 {
-	while (*s1 && *s2 && *s1 == *s2 && n--)
+	while (*s1 && *s2 && *s1 == *s2 && --n)
 	{
 		s1++;
 		s2++;
@@ -29,7 +29,8 @@ char	*_getenv(const char *name)
 	{
 		if (!_strncmp(__environ[i], (char*)name, len))
 		{
-			return (__environ[i]);
+			if (__environ[i][len] == '=')
+				return (__environ[i] + len + 1);
 		}
 		i++;
 	}
