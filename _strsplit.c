@@ -58,7 +58,7 @@ char **_strsplit(char *str, const char *delim)
 		if (is_in_str(str[i], delim))
 			is_word = 0;
 	}
-	split = malloc(sizeof(char *) * (nb_words + 1));
+	split = _memalloc(sizeof(char *) * (nb_words + 1));
 	if (!split)
 		return (NULL);
 	for (i = 0; i <= nb_words; i++)
@@ -70,25 +70,12 @@ char **_strsplit(char *str, const char *delim)
 		{
 			while (--i >= 0)
 			{
-				free(split[i]);
-				free(split);
+				_memdel((void*)&split[i]);
+				_memdel((void*)&split);
 				return (NULL);
 			}
 		}
 		str = NULL;
 	}
 	return (split);
-}
-
-void free_tab(char ***tab)
-{
-	int i = 0;
-
-	if (tab && *tab)
-	{
-		while ((*tab)[i])
-			free((*tab)[i++]);
-		free((*tab));
-		*tab = NULL;
-	}
 }

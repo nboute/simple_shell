@@ -6,7 +6,7 @@ char **copy_envp(char **envp)
 
 	for (i = 0; envp[i] != NULL; i++)
 		;
-	newenvp = malloc((i + 1) * sizeof(char*));
+	newenvp = _memalloc((i + 1) * sizeof(char*));
 	if (newenvp == NULL)
 		return (NULL);
 
@@ -16,8 +16,8 @@ char **copy_envp(char **envp)
 		if (!newenvp[i])
 		{
 			while (--i >= 0)
-				free(newenvp[i]);
-			free(newenvp);
+				_memdel((void*)&newenvp[i]);
+			_memdel((void*)&newenvp);
 			return (NULL);
 		}
 	}

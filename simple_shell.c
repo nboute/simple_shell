@@ -15,11 +15,9 @@ int simple_shell(shell_data_t *data)
 	{
 		do
 		{
-			if (data->exit == -1)
-				_putstr("$ ");
-		} while (data->exit == -1 && (ret = read_prompt(data)) != -1);
-		if (data->exit == -1)
-			_putstr("\n");
+			_putstr("$ ");
+		} while ((ret = read_prompt(data)) != -1);
+		_putstr("\n");
 	}
 	return (0);
 }

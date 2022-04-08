@@ -7,8 +7,10 @@ int		init_shell(shell_data_t *data, char **envp)
 		return (-1);
 	data->paths = NULL;
 	data->builtins_list = NULL;
+	data->tokens = NULL;
+	data->buffer = NULL;
 	data->nbcommands = 0;
-	data->exit = -1;
+	data->return_status = 0;
 	if (!init_builtins(data))
 		return (-1);
 	return (0);
@@ -23,5 +25,6 @@ int		main(int ac, char **av, char **envp)
 	if (init_shell(&data, envp) == -1)
 		return (-1);
 	simple_shell(&data);
-	return (data.exit);
+	free_data(&data);
+	return (data.return_status);
 }

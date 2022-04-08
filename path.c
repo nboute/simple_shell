@@ -13,19 +13,19 @@ int		get_path(shell_data_t *data)
 	if (!path)
 		return (-1);
 	data->paths = _strsplit(path, ":");
-	free(path);
+	_memdel((void*)&path);
 	if (!data->paths)
 		return (-1);
 	for (i = 0; data->paths[i] != NULL; i++)
 	{
 		tmp = data->paths[i];
 		data->paths[i] = _strjoin(data->paths[i], "/");
-		free(tmp);
+		_memdel((void*)&tmp);
 		if (!data->paths[i])
 		{
 			while (--i >= 0)
-				free(data->paths[i]);
-			free(data->paths);
+				_memdel((void*)&data->paths[i]);
+			_memdel((void*)&data->paths);
 			return (-1);
 		}
 	}
@@ -79,7 +79,7 @@ char		*find_command(shell_data_t *data, char *command)
 			if (filestats.st_mode & (S_IXUSR | S_IXGRP | S_IXOTH))
 				return (filepath);
 		}
-		free(filepath);
+		_memdel((void*)&filepath);
 	}
 	_putstr_fd(get_filename(_getenv("SHELL", data->envp)), STDERR_FILENO);
 	_putstr_fd(": ", 2);

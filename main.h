@@ -15,17 +15,19 @@ struct shell_data_s;
 typedef struct		builtin_s
 {
 	char				*name;
-	int					(*fct)(struct shell_data_s *, char **);
+	int					(*fct)(struct shell_data_s *);
 	struct builtin_s	*next;
 }					builtin_t;
 
 typedef struct				shell_data_s
 {
+	char			*buffer;
 	char			**envp;
 	char			**paths;
+	char			**tokens;
 	builtin_t		*builtins_list;
 	size_t			nbcommands;
-	int				exit;
+	int				return_status;
 }							shell_data_t;
 
 
@@ -40,11 +42,13 @@ char		*_getenv(const char *name, char **envp);
 int			get_path(shell_data_t *data);
 char		*find_command(shell_data_t *data, char *command);
 char		**copy_envp(char **envp);
-int			find_builtin(shell_data_t *data, char **tokens);
+int			find_builtin(shell_data_t *data);
 int			init_builtins(shell_data_t *data);
 char		*get_filename(char *path);
 
-int			my_exit(struct shell_data_s *data, char **tokens);
+int			my_exit(struct shell_data_s *data);
+void		print_error(shell_data_t *data, char *command);
+void		free_data(shell_data_t *data);
 
 size_t		_strlen(const char *str);
 void		_putstr(char *str);
@@ -60,5 +64,7 @@ int			_putchar_fd(char c, int fd);
 int			_atoi(char *s);
 int			_strcmp(char *s1, char *s2);
 char		**copy_envp(char **envp);
+void		_memdel(void **ptr);
+void		*_memalloc(size_t size);
 
 #endif /* __MAIN_H__ */

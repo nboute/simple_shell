@@ -5,47 +5,44 @@
  */
 int read_prompt(shell_data_t *data)
 {
-	char *buf = NULL, *command;
-	size_t n = 0, id = 0;
-	int ret = 0;
-	char **tabtokens;
+	char	*command;
+	size_t	n = 0;
+	int		ret = 0;
 
 	data->nbcommands++;
-	ret = getline(&buf, &n, stdin);
+	ret = getline(&data->buffer, &n, stdin);
 	if (ret == -1)
 	{
-		if (buf)
-			free(buf);
+		if (data->buffer)
+			_memdel((void*)&data->buffer);
 		return (-1);
 	}
-	if (buf)
+	if (data->buffer)
 	{
-		if (_strlen(buf) > 1)
+		if (_strlen(data->buffer) > 1)
 		{
-			tabtokens = _strsplit(buf, " \n");
-			if (!tabtokens)
+			data->tokens = _strsplit(data->buffer, " \n");
+			if (!data->tokens)
 				return (-1);
-			ret = find_builtin(data, tabtokens);
-			if (data->exit == -1 && !ret)
+			ret = find_builtin(data);
+			if (!ret)
 			{
-				command = find_command(data, tabtokens[0]);
+				command = find_command(data, data->tokens[0]);
 				if (command)
 				{
-					id = fork();
-					if (!id)
-					{
-						if (execve(command, tabtokens, data->envp) == -1)
+					if (!fork())
+						if (execve(command, data->tokens, data->envp) == -1)
 						{
 							perror("ERROR:");
+							exit(2);
 						}
-					}
 					wait(NULL);
+					_memdel((void*)&command);
 				}
 			}
-			free_tab(&tabtokens);
+			free_tab(&data->tokens);
 		}
-		free(buf);
-		buf = NULL;
+		_memdel((void*)&data->buffer);
 	}
 	return (0);
 }

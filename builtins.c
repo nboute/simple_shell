@@ -1,11 +1,11 @@
 #include "main.h"
 
 struct builtin_s	*add_builtin(shell_data_t *data, const char *name,
-					int (*fct)(struct shell_data_s *, char **))
+					int (*fct)(struct shell_data_s *))
 {
 	builtin_t	*new;
 
-	new = malloc(sizeof(*new));
+	new = _memalloc(sizeof(*new));
 	if (!new)
 		return (NULL);
 	new->name = _strdup(name);
@@ -26,17 +26,17 @@ int		init_builtins(shell_data_t *data)
 		return (-1);
 }
 
-int		find_builtin(shell_data_t *data, char **tokens)
+int		find_builtin(shell_data_t *data)
 {
 	builtin_t	*ptr;
 
-	if (!tokens || !tokens[0])
+	if (!data->tokens || !data->tokens[0])
 		return (0);
 	ptr = data->builtins_list;
 	while (ptr && ptr->name)
 	{
-		if (!_strcmp(ptr->name, tokens[0]))
-			return (ptr->fct(data, tokens));
+		if (!_strcmp(ptr->name, data->tokens[0]))
+			return (ptr->fct(data));
 		ptr = ptr->next;
 	}
 	return (0);
