@@ -1,5 +1,10 @@
 #include "main.h"
 
+/**
+ * print_error - Prints error message
+ * @data: Pointer to general data structure
+ * @command: String to complete error message
+ */
 void	print_error(shell_data_t *data, char *command)
 {
 	_putstr_fd(get_filename(_getenv("SHELL", data->envp)), STDERR_FILENO);

@@ -1,46 +1,11 @@
 #include "main.h"
 
-int is_in_str(char c, const char *str)
-{
-	while (*str)
-	{
-		if (c == *str)
-			return (1);
-		str++;
-	}
-	return (0);
-}
-
-char *_strtok(char *str, const char *delim)
-{
-	static char *ptr = NULL;
-	char *next, *tok = NULL;
-	size_t len;
-
-	if (str)
-		ptr = str;
-	while (ptr && is_in_str(*ptr, delim))
-		ptr++;
-	if (!*ptr)
-		return (NULL);
-	next = _strpbrk(ptr, delim);
-	if (next || *ptr)
-	{
-		if (next)
-			len = next - ptr;
-		else
-		{
-			for (len = 0; ptr[len]; len++)
-				;
-		}
-		tok = _strndup(ptr, len);
-	}
-	ptr = next;
-	while (ptr && is_in_str(*ptr, delim))
-		ptr++;
-	return (tok);
-}
-
+/**
+ * _strsplit - Splits string into an array of strings
+ * @str: String to split
+ * @delim: Array of separator bytes
+ * Return: Array of strings
+ */
 char **_strsplit(char *str, const char *delim)
 {
 	int is_word = 0, nb_words = 0, i;
@@ -65,13 +30,13 @@ char **_strsplit(char *str, const char *delim)
 		split[i] = NULL;
 	for (i = 0; i < nb_words; i++)
 	{
-		split[i] = _strtok(str, delim);
+		split[i] = _strdup(_strtok(str, delim));
 		if (!split[i])
 		{
 			while (--i >= 0)
 			{
-				_memdel((void*)&split[i]);
-				_memdel((void*)&split);
+				_memdel((void *)&split[i]);
+				_memdel((void *)&split);
 				return (NULL);
 			}
 		}

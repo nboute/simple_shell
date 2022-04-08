@@ -1,5 +1,11 @@
 #include "main.h"
 
+/**
+ * _strjoin - Concatenates two string together into a new one
+ * @s1: First string
+ * @s2: Second string
+ * Return: Newly created string
+ */
 char	*_strjoin(char *s1, char *s2)
 {
 	char	*join;

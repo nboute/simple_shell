@@ -1,6 +1,15 @@
 #include "main.h"
 
-struct builtin_s	*add_builtin(shell_data_t *data, const char *name,
+/**
+ * add_builtin - Add a builtin to builtins linked list
+ * Builtins are functions for the simple_shell that are defined in the program
+ * itself
+ * @data: Pointer to data structure
+ * @name: String, Name of builtin
+ * @fct: Builtin function pointer
+ * Return: Pointer to new linked list node
+ */
+builtin_t	*add_builtin(shell_data_t *data, const char *name,
 					int (*fct)(struct shell_data_s *))
 {
 	builtin_t	*new;
@@ -20,12 +29,26 @@ struct builtin_s	*add_builtin(shell_data_t *data, const char *name,
 	return (new);
 }
 
+/**
+ * init_builtins - Initializes builtins linked list
+ * @data: Pointer to data structure
+ * Return: 0 on success, -1 on error
+ */
 int		init_builtins(shell_data_t *data)
 {
 	if (!add_builtin(data, "exit", my_exit))
 		return (-1);
+	if (!add_builtin(data, "setenv", _setenv))
+		return (-1);
+	if (!add_builtin(data, "env", _printenv))
+		return (-1);
 }
 
+/**
+ * find_builtin - Checks if command is a builtin
+ * @data: Pointer to data structure
+ * Return: 0 if none was found
+ */
 int		find_builtin(shell_data_t *data)
 {
 	builtin_t	*ptr;
