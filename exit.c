@@ -7,7 +7,6 @@
  */
 int		my_exit(shell_data_t *data)
 {
-	char	*param;
 	int		i, nb;
 
 	if (!data->tokens[1])
@@ -19,7 +18,7 @@ int		my_exit(shell_data_t *data)
 			{
 				print_error(data, "exit");
 				data->return_status = 2;
-				return (-1);
+				return (0);
 			}
 		nb = _atoi(data->tokens[1]);
 	}

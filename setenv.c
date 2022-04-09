@@ -20,7 +20,7 @@ int _setenv(shell_data_t *data)
 		if (!ptr)
 			return (-1);
 		oldptr = *ptr;
-		*ptr = malloc(sizeof(char) * strlen(name) + strlen(value) + 1);
+		*ptr = malloc(sizeof(char) * strlen(name) + strlen(value) + 2);
 		_strcpy(*ptr, name);
 		_strcat(*ptr, "=");
 		_strcat(*ptr, value);
@@ -39,7 +39,7 @@ int _setenv(shell_data_t *data)
 		for (i = 0; data->envp[i] != NULL; i++)
 			envp[i] = data->envp[i];
 		_memdel((void *)&data->envp);
-		envp[i] = malloc(sizeof(char) * strlen(name) + strlen(value) + 1);
+		envp[i] = malloc(sizeof(char) * strlen(name) + strlen(value) + 2);
 		_strcpy(envp[i], name);
 		_strcat(envp[i], "=");
 		_strcat(envp[i], value);

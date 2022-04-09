@@ -50,3 +50,21 @@ int _strncmp(char *s1, char *s2, size_t n)
 	}
 	return (*s1 - *s2);
 }
+
+int		_strstr_count(char *str, char *sub)
+{
+	int	i, j, count = 0;
+
+	for (i = 0; str[i]; i++)
+	{
+		for (j = 0; str[i + j] == sub[j] && sub[j]; j++)
+		{
+			if (sub[j + 1] == '\0')
+			{
+				count++;
+				i += j;
+			}
+		}
+	}
+	return (count);
+}

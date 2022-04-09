@@ -40,6 +40,7 @@ typedef struct				shell_data_s
 	char			*buffer;
 	char			**envp;
 	char			**paths;
+	char			**commands;
 	char			**tokens;
 	builtin_t		*builtins_list;
 	size_t			nbcommands;
@@ -87,6 +88,7 @@ void		_memdel(void **ptr);
 void		*_memalloc(size_t size);
 
 int 		_setenv(shell_data_t *data);
+int 		_unsetenv(shell_data_t *data);
 int			_printenv(shell_data_t *data);
 char		*_strcat(char *dest, char *src);
 void		*_bzero(void *dest, unsigned int n);

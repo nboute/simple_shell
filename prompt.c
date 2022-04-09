@@ -9,9 +9,8 @@ int		execute_command(shell_data_t *data)
 {
 	char	*command;
 	int		ret = 0;
-
 	ret = find_builtin(data);
-	if (ret)
+	if (ret == -1)
 	{
 		command = find_command(data, data->tokens[0]);
 		if (command)
@@ -52,7 +51,9 @@ int read_prompt(shell_data_t *data)
 	{
 		if (_strlen(data->buffer) > 1)
 		{
-			// parse_line(data);
+/* 			
+*			parse_line(data);
+*/
 			data->tokens = _strsplit(data->buffer, " \n");
 			if (!data->tokens)
 				return (-1);

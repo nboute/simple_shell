@@ -42,6 +42,9 @@ int		init_builtins(shell_data_t *data)
 		return (-1);
 	if (!add_builtin(data, "env", _printenv))
 		return (-1);
+	if (!add_builtin(data, "unsetenv", _unsetenv))
+		return (-1);
+	return (0);
 }
 
 /**
@@ -54,7 +57,7 @@ int		find_builtin(shell_data_t *data)
 	builtin_t	*ptr;
 
 	if (!data->tokens || !data->tokens[0])
-		return (0);
+		return (-1);
 	ptr = data->builtins_list;
 	while (ptr && ptr->name)
 	{
@@ -62,5 +65,5 @@ int		find_builtin(shell_data_t *data)
 			return (ptr->fct(data));
 		ptr = ptr->next;
 	}
-	return (0);
+	return (-1);
 }

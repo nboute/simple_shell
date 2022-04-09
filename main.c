@@ -17,7 +17,7 @@ int		init_shell(shell_data_t *data, char **envp)
 	data->buffer = NULL;
 	data->nbcommands = 0;
 	data->return_status = 0;
-	if (!init_builtins(data))
+	if (init_builtins(data))
 		return (-1);
 	return (0);
 }
