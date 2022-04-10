@@ -8,15 +8,13 @@ int _unsetenv(shell_data_t *data)
 {
 	char	*name, **env, **dup;
 	int		i = 0, size = 0, j = 0;
-	
+
 	name = data->tokens[1];
 	env = _getenvptr(name, data->envp);
 
 	if (name == NULL || env == NULL)
 	{
-		/**
-		* Write Error message here
-		*/
+		print_error(data, "Error");
 		return (1);
 	}
 	for (size = 0; data->envp[size] != NULL; size++)
