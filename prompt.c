@@ -9,6 +9,7 @@ int		execute_command(shell_data_t *data)
 {
 	char	*command;
 	int		ret = 0;
+
 	ret = find_builtin(data);
 	if (ret == -1)
 	{
@@ -25,7 +26,37 @@ int		execute_command(shell_data_t *data)
 			_memdel((void *)&command);
 		}
 	}
-	free_tab(&data->tokens);
+	return (0);
+}
+
+/**
+ * parse_execute_line - Parses, formats and executes command line
+ * @data: Pointer to data structure
+ * Return: 0 on success, -1 on error
+ */
+int	parse_execute_line(shell_data_t *data)
+{
+	char	*tmp;
+	int		i = 0;
+
+	tmp = _strchr(data->buffer, '#');
+	if (tmp)
+		*tmp = '\0';
+	data->commands = _strsplit(data->buffer, ";");
+	_memdel((void *)&data->buffer);
+	if (!data->commands)
+		return (-1);
+	while (data->commands[i])
+	{
+		data->tokens = _strsplit(data->commands[i], " \n");
+		if (!data->tokens)
+			return (-1);
+		if (execute_command(data))
+			return (-1);
+		free_tab(&data->tokens);
+		i++;
+	}
+	free_tab(&data->commands);
 	return (0);
 }
 
@@ -47,20 +78,10 @@ int read_prompt(shell_data_t *data)
 			_memdel((void *)&data->buffer);
 		return (-1);
 	}
-	if (data->buffer)
+	if (data->buffer && _strlen(data->buffer) > 1)
 	{
-		if (_strlen(data->buffer) > 1)
-		{
-/* 			
-*			parse_line(data);
-*/
-			data->tokens = _strsplit(data->buffer, " \n");
-			if (!data->tokens)
-				return (-1);
-			if (execute_command(data))
-				return (-1);
-		}
+		if (parse_execute_line(data))
+			return (-1);
 	}
-	_memdel((void *)&data->buffer);
 	return (0);
 }

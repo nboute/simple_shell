@@ -51,6 +51,12 @@ int _strncmp(char *s1, char *s2, size_t n)
 	return (*s1 - *s2);
 }
 
+/**
+ * _strstr_count - Counts substrings found in string
+ * @str: String
+ * @sub: Substring to search for
+ * Return: Number of substrings found
+ */
 int		_strstr_count(char *str, char *sub)
 {
 	int	i, j, count = 0;
@@ -67,4 +73,19 @@ int		_strstr_count(char *str, char *sub)
 		}
 	}
 	return (count);
+}
+
+/**
+ * _strchr - find first occurence of a character in a string
+ * @s: string
+ * @c: character to search
+ * Return: pointer to first occurence
+ */
+char	*_strchr(char *s, char c)
+{
+	while (*s && *s != c)
+		s++;
+	if (!*s && c)
+		return (0x0);
+	return (s);
 }

@@ -93,7 +93,7 @@ char		*find_command(shell_data_t *data, char *command)
 		}
 		_memdel((void *)&filepath);
 	}
-	_putstr_fd(get_filename(_getenv("SHELL", data->envp)), STDERR_FILENO);
+	_putstr_fd(data->argv[0], STDERR_FILENO);
 	_putstr_fd(": ", 2);
 	print_number_fd(data->nbcommands, STDERR_FILENO);
 	_putstr_fd(": ", 2);

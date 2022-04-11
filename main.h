@@ -10,6 +10,19 @@
 #include <sys/wait.h>
 
 #define BUF_SIZE 512
+
+/**
+ * struct string_list_s - Linked list of strings
+ * @str: String
+ * @next: Pointer to next node
+ */
+typedef struct	string_list_s
+{
+	char					*str;
+	struct string_list_s	*next;
+}				string_list_t;
+
+
 struct shell_data_s;
 
 /**
@@ -37,6 +50,7 @@ typedef struct		builtin_s
  */
 typedef struct				shell_data_s
 {
+	char			**argv;
 	char			*buffer;
 	char			**envp;
 	char			**paths;
@@ -86,6 +100,7 @@ int			_strcmp(char *s1, char *s2);
 char		**copy_envp(char **envp);
 void		_memdel(void **ptr);
 void		*_memalloc(size_t size);
+char		*_strchr(char *s, char c);
 
 int 		_setenv(shell_data_t *data);
 int 		_unsetenv(shell_data_t *data);

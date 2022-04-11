@@ -26,7 +26,7 @@ char	*_getenv(const char *name, char **envp)
 }
 
 /**
- * _getenv - Get a specific environment variable address
+ * _getenvptr - Get a specific environment variable address
  * @name: Name of variable to search for
  * @envp: Array of environment variables
  * Return: String with selected variable, or NULL if it wasn't found

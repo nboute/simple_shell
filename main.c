@@ -34,7 +34,7 @@ int		main(int ac, char **av, char **envp)
 	shell_data_t data;
 
 	(void)ac;
-	(void)av;
+	data.argv = av;
 	if (init_shell(&data, envp) == -1)
 		return (-1);
 	simple_shell(&data);

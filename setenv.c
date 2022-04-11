@@ -7,11 +7,18 @@
 int _setenv(shell_data_t *data)
 {
 	int				i, size = 0;
-	char			**envp, **ptr, *oldptr, *new, *name, *value;
+	char			**envp, **ptr, *oldptr, *new, *name = NULL, *value = NULL;
 
+	if (!data->tokens)
+		return (-1);
 	name = data->tokens[1];
+	if (!name)
+	{
+		print_error(data, "setenv");
+		return (1);
+	}
 	value = data->tokens[2];
-	if (!name || !value)
+	if (!value)
 		return (0);
 	new = _getenv(name, data->envp);
 	if (new)
