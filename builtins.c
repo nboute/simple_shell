@@ -46,6 +46,8 @@ int		init_builtins(shell_data_t *data)
 		return (-1);
 	if (!add_builtin(data, "help", _help))
 		return (-1);
+	if (!add_builtin(data, "history", _history))
+		return (-1);
 
 	return (0);
 }

@@ -4,36 +4,51 @@
  *@data: Pointer to data structure
  *Return:
  */
-int	_history(shell_data_t *data)
+int	add_history(shell_data_t *data)
 {
-	builtin_t *newhistory, *head, *tmp;
-	char *str;
-	int nb;
-	str = data->commands;
+	history_t *new_line, **head, *tmp;
 
-	newhistory = (builtin_t *)malloc(sizeof(builtin_t));
-	if (newhistory == NULL)
-		return (NULL);
+	head = &data->history;
+	
+	new_line = malloc(sizeof(history_t));
+	if (new_line == NULL)
+		return (-1);
 
-	newhistory->str = _strdup(str);
-	if (newhistory->str == NULL)
+	new_line->line = _strdup(data->buffer);
+	if (new_line->line == NULL)
 	{
-		free(newhistory);
-		return (NULL);
+		free(new_line);
+		return (-1);
 	}
-	newhistory->next = 0;
+	new_line->next = 0;
+	new_line->nb_line = data->total_lines;
 
 	tmp = *head;
 	if (*head != NULL)
 	{
 		while (tmp->next != NULL)
 			tmp = tmp->next;
-		tmp->next = newhistory;
+		tmp->next = new_line;
 	}
 	else
-		*head = newhistory;
+		*head = new_line;
 
-	_putstr(nb, );
+	return (0);
+}
+int _history(shell_data_t *data)
+{
+	history_t *history = data->history;
 
-	return (newhistory);
+	while (history)
+	{
+		if (history->nb_line >= data->total_lines - 1000)
+		{
+			print_number_fd(history->nb_line, STDOUT_FILENO);
+			_putstr(" ");
+			_putstr(history->line);
+		}
+		history = history->next;
+	}
+	return (0);
+	
 }

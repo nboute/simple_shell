@@ -49,6 +49,22 @@ void	free_builtins_list(builtin_t **list)
 		}
 	}
 }
+void	free_history(history_t **history)
+{
+	history_t	*tmp;
+
+	if (history)
+	{
+		while (*history)
+		{
+			tmp = (*history);
+			*history = (*history)->next;
+			if (tmp->line)
+				_memdel((void *)&tmp->line);
+			_memdel((void *)&tmp);
+		}
+	}
+}
 
 /**
  * free_data - Frees variables in shell_data_t structure
@@ -61,5 +77,6 @@ void	free_data(shell_data_t *data)
 	free_tab(&data->tokens);
 	free_builtins_list(&data->builtins_list);
 	free_tab(&data->commands);
+	free_history(&data->history);
 	_memdel((void *)&data->buffer);
 }

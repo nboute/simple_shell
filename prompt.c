@@ -85,7 +85,9 @@ int read_prompt(shell_data_t *data)
 		return (-1);
 	}
 	if (data->buffer && _strlen(data->buffer) > 1)
-	{
+	{ 
+		add_history(data);
+		data->total_lines += 1;
 		if (parse_execute_line(data))
 			return (-1);
 	}

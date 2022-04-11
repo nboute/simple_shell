@@ -40,6 +40,14 @@ typedef struct		builtin_s
 	int					(*fct)(struct shell_data_s *);
 	struct builtin_s	*next;
 }					builtin_t;
+/**
+*/
+typedef struct		history_s
+{
+	char				*line;
+	int					nb_line;
+	struct history_s	*next;
+}					history_t;
 
 /**
  * struct shell_data_s - General data structure
@@ -64,6 +72,8 @@ typedef struct				shell_data_s
 	builtin_t		*builtins_list;
 	size_t			nbcommands;
 	int				return_status;
+	history_t		*history;
+	int				total_lines;
 }							shell_data_t;
 
 
@@ -86,6 +96,8 @@ int			init_builtins(shell_data_t *data);
 char		*get_filename(char *path);
 int			script_shell(shell_data_t *data);
 int			parse_execute_line(shell_data_t *data);
+int			add_history(shell_data_t *data);
+int			_history(shell_data_t *data);
 
 int			my_exit(struct shell_data_s *data);
 void		print_error(shell_data_t *data, char *command);
