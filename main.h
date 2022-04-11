@@ -8,19 +8,22 @@
 #include <fcntl.h>
 #include <string.h>
 #include <sys/wait.h>
+#include <signal.h>
 
 #define BUF_SIZE 512
 
 /**
- * struct string_list_s - Linked list of strings
- * @str: String
+ * struct alias_list_s - Linked list of aliass
+ * @alias: string
+ * @replacement: string to replace with
  * @next: Pointer to next node
  */
-typedef struct	string_list_s
+typedef struct		alias_list_s
 {
-	char					*str;
-	struct string_list_s	*next;
-}				string_list_t;
+	char				*alias;
+	char				*replacement;
+	struct alias_list_s	*next;
+}					alias_list_t;
 
 
 struct shell_data_s;
@@ -50,6 +53,8 @@ typedef struct		builtin_s
  */
 typedef struct				shell_data_s
 {
+	int				exit_err;
+	alias_list_t	*aliases;
 	char			**argv;
 	char			*buffer;
 	char			**envp;
@@ -79,6 +84,8 @@ char		**copy_envp(char **envp);
 int			find_builtin(shell_data_t *data);
 int			init_builtins(shell_data_t *data);
 char		*get_filename(char *path);
+int			script_shell(shell_data_t *data);
+int			parse_execute_line(shell_data_t *data);
 
 int			my_exit(struct shell_data_s *data);
 void		print_error(shell_data_t *data, char *command);
@@ -101,11 +108,15 @@ char		**copy_envp(char **envp);
 void		_memdel(void **ptr);
 void		*_memalloc(size_t size);
 char		*_strchr(char *s, char c);
+char		*_strstr(char *haystack, char *needle);
 
 int 		_setenv(shell_data_t *data);
+int			_setenv2(shell_data_t *data);
 int 		_unsetenv(shell_data_t *data);
 int			_printenv(shell_data_t *data);
 char		*_strcat(char *dest, char *src);
 void		*_bzero(void *dest, unsigned int n);
+void 		print_prompt(int a);
+int 		_help(shell_data_t *data);
 
 #endif /* __MAIN_H__ */

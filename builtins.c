@@ -44,6 +44,9 @@ int		init_builtins(shell_data_t *data)
 		return (-1);
 	if (!add_builtin(data, "unsetenv", _unsetenv))
 		return (-1);
+	if (!add_builtin(data, "help", _help))
+		return (-1);
+
 	return (0);
 }
 

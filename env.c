@@ -13,7 +13,7 @@ char	*_getenv(const char *name, char **envp)
 	for (len = 0; name[len]; len++)
 		;
 	i = 0;
-	while (envp[i])
+	while (envp && envp[i])
 	{
 		if (!_strncmp(envp[i], (char *)name, len))
 		{
@@ -38,7 +38,7 @@ char	**_getenvptr(const char *name, char **envp)
 	for (len = 0; name[len]; len++)
 		;
 	i = 0;
-	while (envp[i])
+	while (envp && envp[i])
 	{
 		if (!_strncmp(envp[i], (char *)name, len))
 		{

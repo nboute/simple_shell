@@ -10,7 +10,12 @@ int		get_path(shell_data_t *data)
 	int		i = 0;
 	char	*path, *tmp;
 
-	path = _strdup(_getenv("PATH", data->envp));
+	if (!data->envp)
+		return (0);
+	tmp = _getenv("PATH", data->envp);
+	if (!tmp)
+		return (0);
+	path = _strdup(tmp);
 	if (!path)
 		return (-1);
 	data->paths = _strsplit(path, ":");
@@ -81,7 +86,7 @@ char		*find_command(shell_data_t *data, char *command)
 	struct stat	filestats;
 	char		*filepath;
 
-	for (i = 0; data->paths[i]; i++)
+	for (i = 0; data->paths && data->paths[i]; i++)
 	{
 		filepath = _strjoin(data->paths[i], command);
 		if (!filepath)

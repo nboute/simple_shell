@@ -7,8 +7,9 @@
  */
 int		execute_command(shell_data_t *data)
 {
-	char	*command;
+	char	*command = NULL;
 	int		ret = 0;
+	int		status = 1;
 
 	ret = find_builtin(data);
 	if (ret == -1)
@@ -22,7 +23,8 @@ int		execute_command(shell_data_t *data)
 					perror("ERROR:");
 					exit(2);
 				}
-			wait(NULL);
+			wait(&status);
+			data->return_status = status / 256;
 			_memdel((void *)&command);
 		}
 	}
@@ -39,6 +41,7 @@ int	parse_execute_line(shell_data_t *data)
 	char	*tmp;
 	int		i = 0;
 
+	data->exit_err = 0;
 	tmp = _strchr(data->buffer, '#');
 	if (tmp)
 		*tmp = '\0';
@@ -46,13 +49,16 @@ int	parse_execute_line(shell_data_t *data)
 	_memdel((void *)&data->buffer);
 	if (!data->commands)
 		return (-1);
+	data->return_status = 0;
 	while (data->commands[i])
 	{
 		data->tokens = _strsplit(data->commands[i], " \n");
 		if (!data->tokens)
 			return (-1);
-		if (execute_command(data))
+		if (execute_command(data) == -1)
 			return (-1);
+		if (data->exit_err)
+			break;
 		free_tab(&data->tokens);
 		i++;
 	}

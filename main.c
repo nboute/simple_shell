@@ -11,10 +11,12 @@ int		init_shell(shell_data_t *data, char **envp)
 	data->envp = copy_envp(envp);
 	if (data->envp == NULL)
 		return (-1);
+	data->exit_err = 0;
 	data->paths = NULL;
 	data->builtins_list = NULL;
 	data->tokens = NULL;
 	data->buffer = NULL;
+	data->commands = NULL;
 	data->nbcommands = 0;
 	data->return_status = 0;
 	if (init_builtins(data))
@@ -33,10 +35,11 @@ int		main(int ac, char **av, char **envp)
 {
 	shell_data_t data;
 
-	(void)ac;
 	data.argv = av;
 	if (init_shell(&data, envp) == -1)
 		return (-1);
+	if (ac > 1)
+		script_shell(&data);
 	simple_shell(&data);
 	free_data(&data);
 	return (data.return_status);

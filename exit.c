@@ -17,6 +17,9 @@ int		my_exit(shell_data_t *data)
 			if (data->tokens[1][i] < '0' || data->tokens[1][i] > '9')
 			{
 				print_error(data, "exit");
+				if (!isatty(STDIN_FILENO))
+					exit(2);
+				data->exit_err = 1;
 				data->return_status = 2;
 				return (0);
 			}
@@ -57,5 +60,6 @@ void	free_data(shell_data_t *data)
 	free_tab(&data->paths);
 	free_tab(&data->tokens);
 	free_builtins_list(&data->builtins_list);
+	free_tab(&data->commands);
 	_memdel((void *)&data->buffer);
 }
