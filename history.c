@@ -1,15 +1,15 @@
 #include "main.h"
 /**
- *_history - prints the history of commands
+ *add_history - add commands written in history
  *@data: Pointer to data structure
- *Return:
+ *Return: 0 on success
  */
 int	add_history(shell_data_t *data)
 {
 	history_t *new_line, **head, *tmp;
 
 	head = &data->history;
-	
+
 	new_line = malloc(sizeof(history_t));
 	if (new_line == NULL)
 		return (-1);
@@ -35,6 +35,11 @@ int	add_history(shell_data_t *data)
 
 	return (0);
 }
+/**
+ * _history - writes the history commands
+ * @data: Pointer to data structure
+ * Return: 0 on success
+ */
 int _history(shell_data_t *data)
 {
 	history_t *history = data->history;
@@ -50,5 +55,4 @@ int _history(shell_data_t *data)
 		history = history->next;
 	}
 	return (0);
-	
 }

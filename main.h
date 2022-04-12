@@ -41,7 +41,11 @@ typedef struct		builtin_s
 	struct builtin_s	*next;
 }					builtin_t;
 /**
-*/
+ * struct history_s - linked list for history
+ * @line: line of the command written by the user
+ * @nb_line: permits to count the line of history
+ * @next: pointer to next node
+ */
 typedef struct		history_s
 {
 	char				*line;
