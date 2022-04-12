@@ -1,12 +1,11 @@
 #include "main.h"
 
-
 /**
  * read_file - Gets next line in file and formats it for execution
  * @data: Pointer to data structure
  * Return: 0 on success, -1 on error
  */
-int read_file(shell_data_t *data)
+int		read_file(shell_data_t *data)
 {
 	size_t	n = 0;
 	int		ret;
@@ -24,22 +23,6 @@ int read_file(shell_data_t *data)
 		if (parse_execute_line(data))
 			return (-1);
 	}
-	return (0);
-}
-
-
-/**
- * simple_shell - Default loop of simple_shell program
- * @data: Pointer to data structure
- * Return: 0 on success, -1 on error
- */
-int script_shell(shell_data_t *data)
-{
-	signal(SIGINT, print_prompt);
-	if (get_path(data) == -1)
-		return (-1);
-	while (read_prompt(data) != -1)
-			;
 	return (0);
 }
 
@@ -69,8 +52,13 @@ int simple_shell(shell_data_t *data)
 	}
 	return (0);
 }
+
+/**
+ * print_prompt - Prints prompt sign
+ * @a: Unused parameter
+ */
 void print_prompt(int a)
 {
-	(void) a;
+	(void)a;
 	_putstr("\n$ ");
 }
