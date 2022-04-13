@@ -36,12 +36,19 @@ char *read_line(char **line, size_t *n, FILE *stream)
 	if (len == -1)
 	{
 		//  Ajouter buffer a la ligne et continuer a lire
+		/* _strcat(\n, buffer);
+		*/
 	}
 	else
 	{
 		if (*line)
 		{
 			// Rejoindre ancien buffer avec nouveau
+			/*newbuf = malloc(2 * line * sizeof(char));
+			_strcat(line, newbuff);
+			 *line = 2 * line;
+			 
+			*/
 		}
 		else
 		{
