@@ -86,6 +86,8 @@ char		*find_command(shell_data_t *data, char *command)
 	struct stat	filestats;
 	char		*filepath;
 
+	if (*command == '/')
+		return (_strdup(command));
 	for (i = 0; data->paths && data->paths[i]; i++)
 	{
 		filepath = _strjoin(data->paths[i], command);
