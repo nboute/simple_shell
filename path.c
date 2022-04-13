@@ -86,25 +86,18 @@ char		*find_command(shell_data_t *data, char *command)
 	struct stat	filestats;
 	char		*filepath;
 
-	if (*command == '/' || *command == '.')
-		return (_strdup(command));
-	for (i = 0; data->paths && data->paths[i]; i++)
-	{
-		filepath = _strjoin(data->paths[i], command);
-		if (!filepath)
-			return (NULL);
-		if (stat(filepath, &filestats) >= 0)
+	if (*command != '/' && *command != '.')
+		for (i = 0; data->paths && data->paths[i]; i++)
 		{
-			if (filestats.st_mode & (S_IXUSR | S_IXGRP | S_IXOTH))
-				return (filepath);
+			filepath = _strjoin(data->paths[i], command);
+			if (!filepath)
+				return (NULL);
+			if (stat(filepath, &filestats) >= 0)
+			{
+				if (filestats.st_mode & (S_IXUSR | S_IXGRP | S_IXOTH))
+					return (filepath);
+			}
+			_memdel((void *)&filepath);
 		}
-		_memdel((void *)&filepath);
-	}
-	_putstr_fd(data->argv[0], STDERR_FILENO);
-	_putstr_fd(": ", 2);
-	print_number_fd(data->nbcommands, STDERR_FILENO);
-	_putstr_fd(": ", 2);
-	_putstr_fd(command, 2);
-	_putstr_fd(": not found\n", 2);
-	return (NULL);
+	return (_strdup(command));
 }
