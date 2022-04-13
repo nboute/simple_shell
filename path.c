@@ -12,7 +12,7 @@ int		get_path(shell_data_t *data)
 
 	if (!data->envp)
 		return (0);
-	tmp = _getenv("PATH", data->envp);
+	tmp = _getenv("PATH=", data->envp);
 	if (!tmp)
 		return (0);
 	path = _strdup(tmp);
