@@ -11,6 +11,7 @@ int		init_shell(shell_data_t *data, char **envp)
 	data->envp = copy_envp(envp);
 	if (data->envp == NULL)
 		return (-1);
+	data->aliases = NULL;
 	data->exit_err = 0;
 	data->paths = NULL;
 	data->builtins_list = NULL;
