@@ -109,6 +109,7 @@ alias_list_t	*get_alias(char *name, alias_list_t *list);
 void			print_error_not_found(shell_data_t *data, char *command);
 void			print_error_parameter(shell_data_t *data, char *command);
 void			free_data(shell_data_t *data);
+int				command_exists(char *command);
 
 size_t			_strlen(const char *str);
 void			_putstr(char *str);

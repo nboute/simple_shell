@@ -27,12 +27,9 @@ int		execute_command(shell_data_t *data)
 		command = find_command(data, data->tokens[0]);
 		if (command)
 		{
-			if (!fork())
-				if (execve(command, data->tokens, data->envp) == -1)
-				{
-					print_error_not_found(data, command);
-					exit(2);
-				}
+			if (!command_exists(command)
+			|| (!fork() && execve(command, data->tokens, data->envp) == -1))
+				print_error_not_found(data, command);
 			wait(&status);
 			data->return_status = status / 256;
 			_memdel((void *)&command);
