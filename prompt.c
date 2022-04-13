@@ -66,7 +66,7 @@ int	parse_execute_line(shell_data_t *data)
 		return (-1);
 	while (data->commands[i])
 	{
-		data->tokens = _strsplit(data->commands[i], " \n");
+		data->tokens = _strsplit(data->commands[i], " \t\n");
 		if (!data->tokens)
 			return (-1);
 		if (!data->tokens[0] || !_strlen(data->tokens[0]))
