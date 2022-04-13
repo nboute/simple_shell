@@ -12,7 +12,7 @@ int		get_path(shell_data_t *data)
 
 	if (!data->envp)
 		return (0);
-	tmp = _getenv("PATH=", data->envp);
+	tmp = _getenv("PATH", data->envp);
 	if (!tmp)
 		return (0);
 	path = _strdup(tmp);
@@ -104,6 +104,7 @@ char		*find_command(shell_data_t *data, char *command)
 	char		*filepath;
 
 	if (*command != '/' && *command != '.')
+	{
 		for (i = 0; data->paths && data->paths[i]; i++)
 		{
 			filepath = _strjoin(data->paths[i], command);
@@ -113,5 +114,6 @@ char		*find_command(shell_data_t *data, char *command)
 				return (filepath);
 			_memdel((void *)&filepath);
 		}
+	}
 	return (_strdup(command));
 }

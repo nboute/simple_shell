@@ -33,9 +33,7 @@ int		execute_command(shell_data_t *data)
 			data->return_status = 127;
 		}
 		else if (!fork() && execve(command, data->tokens, data->envp) == -1)
-		{
 			print_error_not_found(data, command);
-		}
 		else
 		{
 			wait(&status);
