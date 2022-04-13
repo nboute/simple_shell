@@ -106,8 +106,8 @@ int				script_shell(shell_data_t *data);
 int				parse_execute_line(shell_data_t *data);
 int				add_history(shell_data_t *data);
 alias_list_t	*get_alias(char *name, alias_list_t *list);
-
-void			print_error(shell_data_t *data, char *command);
+void			print_error_not_found(shell_data_t *data, char *command);
+void			print_error_parameter(shell_data_t *data, char *command);
 void			free_data(shell_data_t *data);
 
 size_t			_strlen(const char *str);

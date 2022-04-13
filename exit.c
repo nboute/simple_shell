@@ -18,7 +18,7 @@ int		my_exit(void *addr)
 		for (i = 0; data->tokens[1][i]; i++)
 			if (data->tokens[1][i] < '0' || data->tokens[1][i] > '9')
 			{
-				print_error(data, "exit");
+				print_error_parameter(data, "exit");
 				if (!isatty(STDIN_FILENO))
 					exit(2);
 				data->exit_err = 1;
