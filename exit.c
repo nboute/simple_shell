@@ -12,7 +12,7 @@ int		my_exit(void *addr)
 
 	data = (shell_data_t *)addr;
 	if (!data->tokens[1])
-		nb = 0;
+		nb = data->return_status;
 	else
 	{
 		for (i = 0; data->tokens[1][i]; i++)
