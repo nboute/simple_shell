@@ -1,13 +1,15 @@
 #include "main.h"
 /**
  * _setenv - add or change an environment
- * @data: pointer to data structure
+ * @addr: pointer to data structure
  * Return: 0 on success
  */
-int _setenv(shell_data_t *data)
+int _setenv(void *addr)
 {
+	shell_data_t	*data;
 	char		**ptr, *oldptr, *new, *name = NULL, *value = NULL;
 
+	data = (shell_data_t *)addr;
 	if (!data->tokens || !data->tokens[0])
 		return (-1);
 	name = data->tokens[1];

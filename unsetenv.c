@@ -1,14 +1,16 @@
 #include "main.h"
 /**
  * _unsetenv - deletes the variable name from the environment
- * @data: pointer to data structure
+ * @addr: pointer to data structure
  * Return: 0 on success the name is delete
  */
-int _unsetenv(shell_data_t *data)
+int _unsetenv(void *addr)
 {
+	shell_data_t	*data;
 	char	*name, **env, **dup;
 	int		i = 0, size = 0, j = 0;
 
+	data = (shell_data_t *)addr;
 	name = data->tokens[1];
 	env = _getenvptr(name, data->envp);
 

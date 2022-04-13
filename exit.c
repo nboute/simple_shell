@@ -2,13 +2,15 @@
 
 /**
  * my_exit - Exits shell, Builtin exit function
- * @data: Pointer to data structure
+ * @addr: Pointer to data structure
  * Return: -1 if invalid parameter
  */
-int		my_exit(shell_data_t *data)
+int		my_exit(void *addr)
 {
 	int		i, nb;
+	shell_data_t	*data;
 
+	data = (shell_data_t *)addr;
 	if (!data->tokens[1])
 		nb = 0;
 	else
@@ -49,6 +51,10 @@ void	free_builtins_list(builtin_t **list)
 		}
 	}
 }
+/**
+ * free_history - Frees history
+ * @history: History linked list
+ */
 void	free_history(history_t **history)
 {
 	history_t	*tmp;

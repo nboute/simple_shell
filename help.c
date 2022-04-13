@@ -1,11 +1,14 @@
 #include "main.h"
 /**
  *_help - writes the help built-in
- *@data: Pointer to data structure
+ *@addr: Pointer to data structure
  *Return: None
  */
-int _help(shell_data_t *data)
+int _help(void *addr)
 {
+	shell_data_t	*data;
+
+	data = (shell_data_t *)addr;
 	if (!data->tokens[1])
 	{
 		_putstr("Try 'help exit' or 'help setenv' or 'help unsetenv' or");

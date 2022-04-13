@@ -37,13 +37,16 @@ int	add_history(shell_data_t *data)
 }
 /**
  * _history - writes the history commands
- * @data: Pointer to data structure
+ * @addr: Pointer to data structure
  * Return: 0 on success
  */
-int _history(shell_data_t *data)
+int _history(void *addr)
 {
-	history_t *history = data->history;
+	shell_data_t	*data;
+	history_t		*history;
 
+	data = (shell_data_t *)addr;
+	history = data->history;
 	while (history)
 	{
 		if (history->nb_line >= data->total_lines - 1000)

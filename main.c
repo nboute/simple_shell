@@ -37,11 +37,10 @@ int		main(int ac, char **av, char **envp)
 {
 	shell_data_t data;
 
+	(void)ac;
 	data.argv = av;
 	if (init_shell(&data, envp) == -1)
 		return (-1);
-	if (ac > 1)
-		script_shell(&data);
 	simple_shell(&data);
 	free_data(&data);
 	return (data.return_status);

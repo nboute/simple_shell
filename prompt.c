@@ -7,10 +7,20 @@
  */
 int		execute_command(shell_data_t *data)
 {
-	char	*command = NULL;
+	char	*command = NULL, *tmp;
 	int		ret = 0;
 	int		status = 1;
+	alias_list_t	*alias;
 
+	alias = get_alias(data->tokens[0], data->aliases);
+	if (alias)
+	{
+		tmp = str_replace(data->tokens[0], alias->name, alias->replacement);
+		if (!tmp)
+			return (-1);
+		_memdel((void *)&data->tokens[0]);
+		data->tokens[0] = tmp;
+	}
 	ret = find_builtin(data);
 	if (ret == -1)
 	{
@@ -28,6 +38,8 @@ int		execute_command(shell_data_t *data)
 			_memdel((void *)&command);
 		}
 	}
+	if (ret == 1)
+		return (-1);
 	return (0);
 }
 
@@ -85,7 +97,7 @@ int read_prompt(shell_data_t *data)
 		return (-1);
 	}
 	if (data->buffer && _strlen(data->buffer) > 1)
-	{ 
+	{
 		add_history(data);
 		data->total_lines += 1;
 		if (parse_execute_line(data))

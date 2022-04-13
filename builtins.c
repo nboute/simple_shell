@@ -10,7 +10,7 @@
  * Return: Pointer to new linked list node
  */
 builtin_t	*add_builtin(shell_data_t *data, const char *name,
-					int (*fct)(struct shell_data_s *))
+					int (*fct)(void *))
 {
 	builtin_t	*new;
 
@@ -48,7 +48,8 @@ int		init_builtins(shell_data_t *data)
 		return (-1);
 	if (!add_builtin(data, "history", _history))
 		return (-1);
-
+	if (!add_builtin(data, "alias", my_alias))
+		return (-1);
 	return (0);
 }
 
