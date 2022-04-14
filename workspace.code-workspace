@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../simple_shell_tests"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"*.c": "c",
+			"main.h": "c"
+		}
+	}
+}
