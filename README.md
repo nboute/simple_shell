@@ -1,5 +1,5 @@
 # Simple Shell
-[![shell.png](https://i.postimg.cc/zXMc5wT4/shell.png)](https://postimg.cc/GHFQxy7j)
+![shell.png](https://i.postimg.cc/zXMc5wT4/shell.png)](https://postimg.cc/GHFQxy7j)
 ## Introduction
 This repository is a project for Holberton School , the goal of which was to write a simple UNIX command line interpreter in *C*, using a limited number of standard library functions. The goal in this project was to make us understand how a shell works.
 
