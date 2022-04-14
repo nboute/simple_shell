@@ -35,7 +35,7 @@ You can then run it by invoking `./hsh` in that same directory.
 ## Details
 
 For this project we worked on the environment of the shell, after had done a copy of the environment variables, we can use the PATH of each one to make our own built-ins.
-Graceful, linked lists you can now use in our simple shell, setenv, printenv, unsetenv, exit, help or history builtins.
+Thansfull, linked lists you can now use in our simple shell, setenv, printenv, unsetenv, exit, help or history builtins.
 You also can use commands like ls with his options, pwd or cat…
 We had handle different types of error, like a poor recording of one command by the user.
 The user can make aliases, change a name of a command by a word simplier for him.
