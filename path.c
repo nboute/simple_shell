@@ -75,6 +75,24 @@ char		*get_filename(char *path)
 }
 
 /**
+ * command_exists - Test if a command corresponds to an executable file
+ *
+ * @command: Command string
+ * Return: 1 if valid, 0 if not
+ */
+int			command_exists(char *command)
+{
+	struct stat	filestats;
+
+	if (stat(command, &filestats) >= 0)
+	{
+		if (filestats.st_mode & (S_IXUSR | S_IXGRP | S_IXOTH))
+			return (1);
+	}
+	return (0);
+}
+
+/**
  * find_command - Checks if command exists in PATH directories
  * @data: Pointer to data structure
  * @command: Command string
@@ -83,26 +101,19 @@ char		*get_filename(char *path)
 char		*find_command(shell_data_t *data, char *command)
 {
 	int			i;
-	struct stat	filestats;
 	char		*filepath;
 
-	for (i = 0; data->paths && data->paths[i]; i++)
+	if (*command != '/' && *command != '.')
 	{
-		filepath = _strjoin(data->paths[i], command);
-		if (!filepath)
-			return (NULL);
-		if (stat(filepath, &filestats) >= 0)
+		for (i = 0; data->paths && data->paths[i]; i++)
 		{
-			if (filestats.st_mode & (S_IXUSR | S_IXGRP | S_IXOTH))
+			filepath = _strjoin(data->paths[i], command);
+			if (!filepath)
+				return (NULL);
+			if (command_exists(filepath))
 				return (filepath);
+			_memdel((void *)&filepath);
 		}
-		_memdel((void *)&filepath);
 	}
-	_putstr_fd(data->argv[0], STDERR_FILENO);
-	_putstr_fd(": ", 2);
-	print_number_fd(data->nbcommands, STDERR_FILENO);
-	_putstr_fd(": ", 2);
-	_putstr_fd(command, 2);
-	_putstr_fd(": not found\n", 2);
-	return (NULL);
+	return (_strdup(command));
 }

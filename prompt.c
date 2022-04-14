@@ -25,18 +25,21 @@ int		execute_command(shell_data_t *data)
 	if (ret == -1)
 	{
 		command = find_command(data, data->tokens[0]);
-		if (command)
+		if (!command)
+			return (-1);
+		if (!command_exists(command))
 		{
-			if (!fork())
-				if (execve(command, data->tokens, data->envp) == -1)
-				{
-					perror("ERROR:");
-					exit(2);
-				}
+			print_error_not_found(data, command);
+			data->return_status = 127;
+		}
+		else if (!fork() && execve(command, data->tokens, data->envp) == -1)
+			print_error_not_found(data, command);
+		else
+		{
 			wait(&status);
 			data->return_status = status / 256;
-			_memdel((void *)&command);
 		}
+		_memdel((void *)&command);
 	}
 	if (ret == 1)
 		return (-1);
@@ -61,12 +64,13 @@ int	parse_execute_line(shell_data_t *data)
 	_memdel((void *)&data->buffer);
 	if (!data->commands)
 		return (-1);
-	data->return_status = 0;
 	while (data->commands[i])
 	{
-		data->tokens = _strsplit(data->commands[i], " \n");
+		data->tokens = _strsplit(data->commands[i], " \t\n");
 		if (!data->tokens)
 			return (-1);
+		if (!data->tokens[0] || !_strlen(data->tokens[0]))
+			return (0);
 		if (execute_command(data) == -1)
 			return (-1);
 		if (data->exit_err)

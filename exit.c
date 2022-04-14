@@ -12,13 +12,13 @@ int		my_exit(void *addr)
 
 	data = (shell_data_t *)addr;
 	if (!data->tokens[1])
-		nb = 0;
+		nb = data->return_status;
 	else
 	{
 		for (i = 0; data->tokens[1][i]; i++)
 			if (data->tokens[1][i] < '0' || data->tokens[1][i] > '9')
 			{
-				print_error(data, "exit");
+				print_error_parameter(data, "exit");
 				if (!isatty(STDIN_FILENO))
 					exit(2);
 				data->exit_err = 1;

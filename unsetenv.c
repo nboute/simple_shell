@@ -16,7 +16,7 @@ int _unsetenv(void *addr)
 
 	if (name == NULL || env == NULL)
 	{
-		print_error(data, "Error");
+		print_error_parameter(data, "Error");
 		return (1);
 	}
 	for (size = 0; data->envp[size] != NULL; size++)
