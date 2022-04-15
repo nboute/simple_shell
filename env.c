@@ -34,6 +34,7 @@ char	*_getenv(const char *name, char **envp)
 char	**_getenvptr(const char *name, char **envp)
 {
 	size_t	i, len;
+
 	for (len = 0; name[len]; len++)
 		;
 	i = 0;
