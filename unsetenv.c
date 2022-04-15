@@ -37,7 +37,5 @@ int _unsetenv(void *addr)
 	free(*env);
 	free(data->envp);
 	data->envp = dup;
-	if (env[i])
-		return (-1);
 	return (0);
 }

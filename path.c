@@ -10,6 +10,8 @@ int		get_path(shell_data_t *data)
 	int		i = 0;
 	char	*path, *tmp;
 
+	if (data->paths)
+		free_tab(&data->paths);
 	if (!data->envp)
 		return (0);
 	tmp = _getenv("PATH", data->envp);
@@ -103,6 +105,7 @@ char		*find_command(shell_data_t *data, char *command)
 	int			i;
 	char		*filepath;
 
+	get_path(data);
 	if (*command != '/' && *command != '.')
 	{
 		for (i = 0; data->paths && data->paths[i]; i++)

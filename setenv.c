@@ -21,7 +21,6 @@ int _setenv(void *addr)
 	value = data->tokens[2];
 	if (!value)
 		return (0);
-
 	new = _getenv(name, data->envp);
 	if (new)
 	{
@@ -55,7 +54,6 @@ int _setenv2(shell_data_t *data)
 
 	name = data->tokens[1];
 	value = data->tokens[2];
-
 	for (i = 0; data->envp && data->envp[i] != NULL; i++)
 		size++;
 	envp = _memalloc(sizeof(char *) * (size + 2));
@@ -74,6 +72,5 @@ int _setenv2(shell_data_t *data)
 	_strcat(envp[i], "=");
 	_strcat(envp[i], value);
 	data->envp = envp;
-
 	return (0);
 }

@@ -36,8 +36,6 @@ int simple_shell(shell_data_t *data)
 	int	ret;
 
 	signal(SIGINT, print_prompt);
-	if (get_path(data) == -1)
-		return (-1);
 	if (!isatty(STDIN_FILENO))
 	{
 		while (read_prompt(data) != -1)
