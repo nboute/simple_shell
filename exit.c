@@ -71,7 +71,26 @@ void	free_history(history_t **history)
 		}
 	}
 }
+/**
+ * free_aliases - Frees aliases
+ * @aliases: aliases linked list
+ */
+void	free_aliases(alias_list_t **aliases)
+{
+	alias_list_t	*tmp;
 
+	if (aliases)
+	{
+		while (*aliases)
+		{
+			tmp = (*aliases);
+			*aliases = (*aliases)->next;
+			_memdel((void *)&tmp->name);
+			_memdel((void *)&tmp->replacement);
+			_memdel((void *)&tmp);
+		}
+	}
+}
 /**
  * free_data - Frees variables in shell_data_t structure
  * @data: Pointer to data sturcture
@@ -84,5 +103,6 @@ void	free_data(shell_data_t *data)
 	free_builtins_list(&data->builtins_list);
 	free_tab(&data->commands);
 	free_history(&data->history);
+	free_aliases(&data->aliases);
 	_memdel((void *)&data->buffer);
 }
