@@ -16,7 +16,7 @@ int _setenv(void *addr)
 	if (!name)
 	{
 		print_error_parameter(data, "setenv");
-		return (1);
+		return (0);
 	}
 	value = data->tokens[2];
 	if (!value)
