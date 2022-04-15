@@ -96,16 +96,17 @@ int read_prompt(shell_data_t *data)
 	ret = getline(&data->buffer, &n, stdin);
 	if (ret == -1)
 	{
-		if (data->buffer)
-			_memdel((void *)&data->buffer);
+		_memdel((void *)&data->buffer);
 		return (-1);
 	}
 	if (data->buffer && _strlen(data->buffer) > 1)
 	{
-		add_history(data);
-		data->total_lines += 1;
-		if (parse_execute_line(data))
+		if (add_history(data) || parse_execute_line(data))
+		{
+			_memdel((void *)&data->buffer);
 			return (-1);
+		}
 	}
+	_memdel((void *)&data->buffer);
 	return (0);
 }

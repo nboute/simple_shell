@@ -32,7 +32,7 @@ int	add_history(shell_data_t *data)
 	}
 	else
 		*head = new_line;
-
+	data->total_lines += 1;
 	return (0);
 }
 /**
