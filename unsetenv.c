@@ -12,11 +12,15 @@ int _unsetenv(void *addr)
 
 	data = (shell_data_t *)addr;
 	name = data->tokens[1];
-	env = _getenvptr(name, data->envp);
-
-	if (name == NULL || env == NULL)
+	if (name == NULL)
 	{
-		print_error_parameter(data, "Error");
+		print_error_parameter(data, "unsetenv");
+		return (0);
+	}
+	env = _getenvptr(name, data->envp);
+	if (env == NULL)
+	{
+		print_error_parameter(data, "unsetenv");
 		return (0);
 	}
 	for (size = 0; data->envp[size] != NULL; size++)
@@ -31,11 +35,9 @@ int _unsetenv(void *addr)
 		}
 	}
 	free(*env);
-
 	free(data->envp);
 	data->envp = dup;
 	if (env[i])
 		return (-1);
-
 	return (0);
 }
